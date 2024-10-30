@@ -14,12 +14,12 @@ import theater.project.MovieTheater.Service.Impl.CartServiceImpl;
 @RequestMapping("/cart")
 public class CartController {
 
-    @Autowired
-    private CartServiceImpl cartService;
+//    @Autowired
+//    private CartServiceImpl cartService;
 
-    @PostMapping
-    ResponseEntity<Payment> processCardDetails(@RequestBody CardRequestDTO cardRequestDTO){
-        Payment payment = null;
-        return ResponseEntity.ok(payment);
-    }
+//    @PostMapping
+//    ResponseEntity<Payment> processCardDetails(@RequestBody CardRequestDTO cardRequestDTO){
+//        Payment payment = null;
+//        return ResponseEntity.ok(payment);
+//    }
 }
