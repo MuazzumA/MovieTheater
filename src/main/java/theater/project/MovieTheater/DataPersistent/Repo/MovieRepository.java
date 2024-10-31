@@ -11,7 +11,7 @@ import java.util.List;
 public interface MovieRepository extends JpaRepository<Movie, Long> {
 
 
-    List<Movie> findAll();
+//    List<Movie> findAll();
 //    @Query("SELECT m FROM Movie m")
 //    List<Movie> getAllMovies();
 

@@ -9,6 +9,7 @@ import theater.project.MovieTheater.DataPersistent.Entity.Seat;
 import theater.project.MovieTheater.DataPersistent.Entity.Showing;
 import theater.project.MovieTheater.DataPersistent.Entity.Ticket;
 import theater.project.MovieTheater.DataPersistent.Enum.Status;
+import theater.project.MovieTheater.DataPersistent.Repo.MovieRepository;
 import theater.project.MovieTheater.DataPersistent.Repo.ShowingRepository;
 import theater.project.MovieTheater.DataPersistent.Repo.TicketRepository;
 import theater.project.MovieTheater.Exception.TicketNotFoundException;
@@ -26,7 +27,7 @@ public class TicketServiceImpl implements TicketService {
 
     private final TicketRepository ticketRepository;
     private final ShowingService showingService;
-//    private final MovieRepository movieRepository;
+    private final MovieRepository movieRepository;
 
     @Override
     public GeneratedTicketDTO generateTicket(Movie movie, LocalDate date, LocalTime time, double price, Seat seat) {
@@ -130,6 +131,10 @@ public class TicketServiceImpl implements TicketService {
         return ticketRepository.getCountOfTicketsByMovieId(movieId)*ticketPrice;
     }
 
+    @Override
+    public Long getNumberOfTicketSalesByMovieId(Long id) {
+        return ticketRepository.getCountOfTicketsByMovieId(id);
+    }
 
 
 
