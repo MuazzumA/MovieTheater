@@ -3,11 +3,17 @@ package theater.project.MovieTheater.Service.Impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import theater.project.MovieTheater.API.DTO.Ticket.GeneratedTicketDTO;
+import theater.project.MovieTheater.API.DTO.Ticket.TicketInfoDTO;
 import theater.project.MovieTheater.DataPersistent.Entity.Movie;
 import theater.project.MovieTheater.DataPersistent.Entity.Seat;
+import theater.project.MovieTheater.DataPersistent.Entity.Showing;
 import theater.project.MovieTheater.DataPersistent.Entity.Ticket;
+import theater.project.MovieTheater.DataPersistent.Enum.Status;
+import theater.project.MovieTheater.DataPersistent.Repo.MovieRepository;
+import theater.project.MovieTheater.DataPersistent.Repo.ShowingRepository;
 import theater.project.MovieTheater.DataPersistent.Repo.TicketRepository;
 import theater.project.MovieTheater.Exception.TicketNotFoundException;
+import theater.project.MovieTheater.Service.ShowingService;
 import theater.project.MovieTheater.Service.TicketService;
 
 import java.time.LocalDate;
@@ -20,8 +26,8 @@ import java.util.List;
 public class TicketServiceImpl implements TicketService {
 
     private final TicketRepository ticketRepository;
-//    private final SeatRepository seatRepository;
-//    private final MovieRepository movieRepository;
+    private final ShowingService showingService;
+    private final MovieRepository movieRepository;
 
     @Override
     public GeneratedTicketDTO generateTicket(Movie movie, LocalDate date, LocalTime time, double price, Seat seat) {
@@ -33,11 +39,13 @@ public class TicketServiceImpl implements TicketService {
                                 .seat(seat)
                                 .build();
         Ticket savedTicket = ticketRepository.save(ticketToSave);
+        savedTicket.getSeat().setSeatStatus(Status.OCCUPIED);
+
         return GeneratedTicketDTO.builder()
                 .movieTitle(savedTicket.getMovie().getTitle())
                 .showDate(savedTicket.getDate())
                 .showTime(savedTicket.getTime())
-                .seatNumber(savedTicket.getSeat().getSeatNumber())
+                .seatNumber(String.valueOf(savedTicket.getSeat().getSeatNumber()))
                 .build();
     }
 
@@ -48,7 +56,7 @@ public class TicketServiceImpl implements TicketService {
                 .movieTitle(ticket.getMovie().getTitle())
                 .showDate(ticket.getDate())
                 .showTime(ticket.getTime())
-                .seatNumber(ticket.getSeat().getSeatNumber())
+                .seatNumber(String.valueOf(ticket.getSeat().getSeatNumber()))
                 .build();
     }
 
@@ -66,7 +74,7 @@ public class TicketServiceImpl implements TicketService {
                 .movieTitle(targetTicket.getMovie().getTitle())
                 .showDate(targetTicket.getDate())
                 .showTime(targetTicket.getTime())
-                .seatNumber(targetTicket.getSeat().getSeatNumber())
+                .seatNumber(String.valueOf(targetTicket.getSeat().getSeatNumber()))
                 .build();
     }
 
@@ -79,7 +87,7 @@ public class TicketServiceImpl implements TicketService {
                     .movieTitle(ticket.getMovie().getTitle())
                     .showDate(ticket.getDate())
                     .showTime(ticket.getTime())
-                    .seatNumber(ticket.getSeat().getSeatNumber())
+                    .seatNumber(String.valueOf(ticket.getSeat().getSeatNumber()))
                     .build();
             listOfTicketDTOs.add(ticketDTO);
         }
@@ -102,11 +110,31 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
+    public List<TicketInfoDTO> getUnsavedTicketInfo(Showing showing) {
+        List<Seat> selectedSeatsByShowing = showingService.getSelectedSeatsForShowing(showing.getId());
+        List<TicketInfoDTO> ticketInfoDTOs = new ArrayList<>();
+        for (Seat seat : selectedSeatsByShowing){
+            TicketInfoDTO ticketInfoDTO = TicketInfoDTO.builder()
+                    .movie(showing.getMovie())
+                    .showing(showing)
+                    .seatId(seat.getId())
+                    .build();
+
+            ticketInfoDTOs.add(ticketInfoDTO);
+        }
+        return ticketInfoDTOs;
+    }
+
+    @Override
     public double getRevenueByMovieId(Long movieId) {
         double ticketPrice = 25.00;
         return ticketRepository.getCountOfTicketsByMovieId(movieId)*ticketPrice;
     }
 
+    @Override
+    public Long getNumberOfTicketSalesByMovieId(Long id) {
+        return ticketRepository.getCountOfTicketsByMovieId(id);
+    }
 
 
 

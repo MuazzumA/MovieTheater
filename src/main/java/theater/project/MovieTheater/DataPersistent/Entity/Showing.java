@@ -7,7 +7,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -28,6 +31,12 @@ public class Showing {
     private LocalTime showingTime;
 
 //    @JoinColumn(name = "seat_id")
-    @ManyToMany
-    private List<Seat> seats;
+    @OneToMany(mappedBy = "showing", cascade = CascadeType.ALL)
+    private List<Seat> seats = new ArrayList<>();
+
+    // Helper method to add seats
+    public void addSeat(Seat seat) {
+        seats.add(seat);
+        seat.setShowing(this);
+    }
 }
