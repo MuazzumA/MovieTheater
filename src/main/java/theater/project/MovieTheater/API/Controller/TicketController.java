@@ -34,6 +34,10 @@ public class TicketController {
         return ticketService.getAllTickets();
     }
 
+
+//    /* THE GENERATE TICKET METHOD NEEDS TO GENERATE AND SAVE THE TICKET AFTER THE PAYMENT IS SUCCESSFUL */
+
+
 //    @PostMapping("/generate")
 //    public ResponseEntity<GeneratedTicketDTO> generateTicket(
 //            @RequestParam("movieTitle") String movieTitle,

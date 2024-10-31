@@ -24,5 +24,6 @@ public interface TicketService {
     List<Ticket> getAllTicketsByTime(LocalTime time);
     List<TicketInfoDTO>  getUnsavedTicketInfo(Showing showing);
     double getRevenueByMovieId(Long movieId);
+    Long getNumberOfTicketSalesByMovieId(Long id);
 
 }

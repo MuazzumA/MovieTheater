@@ -4,17 +4,17 @@ public enum Status {
     /*
     FOR MOVIES
      */
-    //CURRENT,            // 0
-    //UPCOMING,           // 1
+    //CURRENT,
+    //UPCOMING,
 
 
     /*
     FOR SEATS
      */
-    AVAILABLE,          // 2
-    SELECTED,           // 3
-    OCCUPIED,           // 4
-    DISABLED            // 5
+    AVAILABLE,
+    SELECTED,
+    OCCUPIED,
+    DISABLED
 
 }
     /*

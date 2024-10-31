@@ -2,6 +2,8 @@ package theater.project.MovieTheater.DataPersistent.Entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -55,5 +57,5 @@ public class Payment {
     private User user;
 
     @Column(name="payment_time")
-    private LocalDateTime paymentTime;
+    private LocalDate paymentDate;
 }
