@@ -44,7 +44,7 @@ public class TicketServiceImpl implements TicketService {
                 .movieTitle(savedTicket.getMovie().getTitle())
                 .showDate(savedTicket.getDate())
                 .showTime(savedTicket.getTime())
-                .seatNumber(savedTicket.getSeat().getSeatNumber())
+                .seatNumber(String.valueOf(savedTicket.getSeat().getSeatNumber()))
                 .build();
     }
 
@@ -55,7 +55,7 @@ public class TicketServiceImpl implements TicketService {
                 .movieTitle(ticket.getMovie().getTitle())
                 .showDate(ticket.getDate())
                 .showTime(ticket.getTime())
-                .seatNumber(ticket.getSeat().getSeatNumber())
+                .seatNumber(String.valueOf(ticket.getSeat().getSeatNumber()))
                 .build();
     }
 
@@ -73,7 +73,7 @@ public class TicketServiceImpl implements TicketService {
                 .movieTitle(targetTicket.getMovie().getTitle())
                 .showDate(targetTicket.getDate())
                 .showTime(targetTicket.getTime())
-                .seatNumber(targetTicket.getSeat().getSeatNumber())
+                .seatNumber(String.valueOf(targetTicket.getSeat().getSeatNumber()))
                 .build();
     }
 
@@ -86,7 +86,7 @@ public class TicketServiceImpl implements TicketService {
                     .movieTitle(ticket.getMovie().getTitle())
                     .showDate(ticket.getDate())
                     .showTime(ticket.getTime())
-                    .seatNumber(ticket.getSeat().getSeatNumber())
+                    .seatNumber(String.valueOf(ticket.getSeat().getSeatNumber()))
                     .build();
             listOfTicketDTOs.add(ticketDTO);
         }
